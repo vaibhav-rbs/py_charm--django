@@ -1,13 +1,16 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
     <head>
-        <title>VB's page</title>
+        <title>New Page</title>
+        <link rel="stylesheet" href="{% static "css/stylesheet.css" %}" /> <!-- CSS -->
+        <script src="{% static "js/bootstrap.js" %}"></script> <!-- JavaScript -->
     </head>
 
     <body>
         <h1>Add a page</h1>
 
-        <form id="category_page" method="post" action="/rango/add_page/">
+        <form id="category_page" method="post" action="/rango/category/{{ category_name_url}}/add_page/">
 
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}

@@ -7,6 +7,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, "templates")
 STATIC_PATH = os.path.join(PROJECT_PATH, "static")
+LOGIN_URL = '/rango/login/'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
