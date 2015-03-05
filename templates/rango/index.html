@@ -1,33 +1,22 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
-{% load static %}
+{% block title %}{{ category_name }}{% endblock %}
 
-<html>
-
-    <head>
-        <title>Vaibhav</title>
-        <link rel="stylesheet" href="{% static "css/stylesheet.css" %}" /> <!-- CSS -->
-        <script src="{% static "js/bootstrap.js" %}"></script> <!-- JavaScript -->
-    </head>
+{% block body_block %}
 
     <body>
         <h1>Welcome to my website</h1>
         {% if categories %}
             <ul>
                 {% for category in categories %}
-                <a href="/rango/category/{{ category.url }}">{{ category.name }}</a>
+                <br><a href="/rango/category/{{ category.url }}">{{ category.name }}</a>
                 {% endfor %}
             </ul>
         {% else %}
             <strong>There are no categories present.</strong>
 
         {% endif %}
-            <br><a href="/rango/add_category"> Add New Category.</a>
-            <br><a href="/rango/register/">Register Here</a>
-            <br><a href="/rango/login/">Login</a>
-            <br><a href="/rango/logout/">Logout</a>
 
-        <br><a href="/rango/about/">About</a>
     </body>
 
-</html>
+{% endblock %}

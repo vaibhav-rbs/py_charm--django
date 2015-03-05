@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-	<head>
-		<link type="text/css" rel="stylesheet" href="{% static "css/stylesheet.css"%}"/>
-        <img src="/media/southwest.jpg" alt="South in Noir" id="pic" />
-		<title></title>
-	</head>
-	<body>
+{% extends 'rango/base.html' %}
+
+{% block title %}VB's Resume{% endblock %}
+
+{% block body_block %}
 		<div id="header">
 			<p id="name">Vaibhav Chauhan</p>
 			<a href="mailto:vchauhan@gmail.com"><p id="email">vchauhan.bmt@gmail.com</p></a>
@@ -90,5 +86,4 @@
 		<div id="footer">
 			<p>Orlando,FL | Tel: (845) 667-7146</p>
 		</div>
-	</body>
-</html>
+{% endblock %}

@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <title>Register</title>
-        <link rel="stylesheet" href="{% static "css/stylesheet.css" %}" /> <!-- CSS -->
-        <script src="{% static "js/bootstrap.js" %}"></script> <!-- JavaScript -->
-    </head>
+{% extends 'rango/base.html' %}
 
-    <body>
-        <h1>Register with Rango</h1>
+{% block title %}Registration Form{% endblock %}
+
+{% block body_block %}
+
+        <h1>Register with VB's Website</h1>
 
         {% if registered %}
         Rango says: <strong>thank you for registering!</strong>
         <a href="/rango">Return to the homepage.</a><br />
         {% else %}
-        Rango says: <strong>register here!</strong><br />
+        VB says: <strong>register here!</strong><br />
 
         <form id="user_form" method="post" action="/rango/register/"
                 enctype="multipart/form-data">
@@ -31,5 +27,5 @@
             <input type="submit" name="submit" value="Register" />
         </form>
         {% endif %}
-    </body>
-</html>
+
+{% endblock %}

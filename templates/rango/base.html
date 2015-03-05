@@ -3,7 +3,7 @@
 
 <html>
     <head>
-        <title>VB's Website - {% block title %}How to Tango with Django!{% endblock %}</title>
+        <title>VB's Website - {% block title %}Tell us what did you do last summer.{% endblock %}</title>
         <link rel="stylesheet" href="{% static "css/stylesheet.css" %}" /> <!-- CSS -->
         <script src="{% static "js/bootstrap.js" %}"></script> <!-- JavaScript -->
     </head>
@@ -18,11 +18,10 @@
         <div>
             <ul>
             {% if user.is_authenticated %}
-                <li><a href="/rango/restricted/">Restricted Page</a></li>
                 <li><a href="/rango/logout/">Logout</a></li>
-                <li><a href="/rango/add_category/">Add a New Category</a></li>
+                <li><a href="/rango/add_category/">Add a new category</a></li>
             {% else %}
-                <li><a href="/rango/register/">Register Here</a></li>
+                <li><a href="/rango/register/">Register here</a></li>
                 <li><a href="/rango/login/">Login</a></li>
             {% endif %}
 

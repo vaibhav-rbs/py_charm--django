@@ -1,10 +1,10 @@
 {% extends 'rango/base.html' %}
 
-{% block title %}{{ category_name }}{% endblock %}
+{% block title %}Add page in, {{ category_name }}{% endblock %}
 
 {% block body_block %}
     <body>
-        <h1>Add a page</h1>
+        <h1>Add a page in {{ category_name }} </h1>
 
         <form id="category_page" method="post" action="/rango/category/{{ category_name_url}}/add_page/">
 
@@ -16,7 +16,7 @@
             {% for field in form.visible_fields %}
                 {{ field.errors }}
                 {{ field.help_text }}
-                {{ field }}
+                {{ field }}<br>
             {% endfor %}
 
             <input type="submit" name="submit" value="Create Page" />

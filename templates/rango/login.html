@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <title>Login</title>
-        <link rel="stylesheet" href="{% static "css/stylesheet.css" %}" /> <!-- CSS -->
-        <script src="{% static "js/bootstrap.js" %}"></script> <!-- JavaScript -->
-    </head>
+{% extends 'rango/base.html' %}
 
-    <body>
+{% block title %}{{ category_name }}{% endblock %}
+
+{% block body_block %}
+
         <h1>Login to Rango</h1>
 
         <form id="login_form" method="post" action="/rango/login/">
@@ -20,5 +16,4 @@
             <input type="submit" value="submit" />
         </form>
 
-    </body>
-</html>
+{% endblock %}
