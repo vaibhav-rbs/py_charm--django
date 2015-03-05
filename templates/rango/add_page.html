@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <title>New Page</title>
-        <link rel="stylesheet" href="{% static "css/stylesheet.css" %}" /> <!-- CSS -->
-        <script src="{% static "js/bootstrap.js" %}"></script> <!-- JavaScript -->
-    </head>
+{% extends 'rango/base.html' %}
 
+{% block title %}{{ category_name }}{% endblock %}
+
+{% block body_block %}
     <body>
         <h1>Add a page</h1>
 
@@ -25,6 +21,4 @@
 
             <input type="submit" name="submit" value="Create Page" />
         </form>
-    </body>
-
-</html>
+{% endblock %}
