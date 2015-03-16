@@ -3,20 +3,42 @@
 {% block title %}{{ category_name }}{% endblock %}
 
 {% block body_block %}
+    <div class="hero-unit">
+    <h1>It's vacation Time</h1>
+    <p>Add something down below we are hungry.</p>
+    </div>
 
-    <body>
-        <h1>Welcome to my website</h1>
-        {% if categories %}
+    <div class="row-fluid">
+        <div class="span6">
+            <h2>Top Five Categories</h2>
+            {% if categories %}
             <ul>
                 {% for category in categories %}
-                <br><a href="/rango/category/{{ category.url }}">{{ category.name }}</a>
+                    <li><a href="/rango/category/{{ category.url }}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
-        {% else %}
-            <strong>There are no categories present.</strong>
+            {% else %}
+                <strong>No categories at present.</strong>
+            {% endif %}
 
-        {% endif %}
+        </div>
+            <!--/span-->
+        <div class="span6">
+            <h2>Top Five Pages</h2>
+            {% if pages %}
+                <ul>
+                    {% for page in pages %}
+                    <li><a href="{{ page.url}}">{{ page.title }}</a> - {{ page.category }} ({{ page.views }} view(s))</li>
+                        {% endfor %}
+                </ul>
+            {% else %}
+                <strong>No pages at present.</strong>
+            {% endif %}
 
-    </body>
+        </div>
+            <!--/span-->
+    </div>
+        <!--/row-->
+
 
 {% endblock %}

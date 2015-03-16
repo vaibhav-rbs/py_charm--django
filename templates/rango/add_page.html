@@ -3,22 +3,27 @@
 {% block title %}Add page in, {{ category_name }}{% endblock %}
 
 {% block body_block %}
-    <body>
-        <h1>Add a page in {{ category_name }} </h1>
+    <div class="hero-unit">
+        <h1>Add a Category</h1>
+        <br/>
+            <div class="container">
 
-        <form id="category_page" method="post" action="/rango/category/{{ category_name_url}}/add_page/">
+                <form class="span6" id="category_page" method="post" action="/rango/category/{{ category_name_url}}/add_page/">
 
-            {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+                    {% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
 
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}<br>
-            {% endfor %}
+                    {% for field in form.visible_fields %}
+                        {{ field.errors }}
+                        {{ field.help_text }}
+                        {{ field }}<br>
+                    {% endfor %}
 
-            <input type="submit" name="submit" value="Create Page" />
-        </form>
+                    <br/>
+                    <button class="btn btn-primary" type="submit" name="submit">Create Category</button>
+                </form>
+            </div>
+    </div>
 {% endblock %}
