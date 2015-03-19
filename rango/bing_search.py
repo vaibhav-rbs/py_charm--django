@@ -1,6 +1,8 @@
 __author__ = 'vaibhavchauhan'
 import json
-import urllib, urllib2
+import urllib
+import urllib2
+
 
 def run_query(search_terms):
     # Specify the base

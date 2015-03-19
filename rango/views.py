@@ -1,12 +1,13 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
-from rango.models import Category, Page
+from rango.models import Category, Page, UserProfile
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from rango.bing_search import run_query
+from django.contrib.auth.models import User
 
 
 def encode_url(str):
@@ -40,8 +41,9 @@ def index(request):
 
     # Query for categories - add the list to our context dictionary.
     #category_list = Category.objects.order_by('-likes')[:5]
-    category_list = Category.objects.all()
+    category_list = get_category_list()
     context_dict = {'categories': category_list}
+    context_dict['cat_list'] = category_list
 
 
     # We loop through each category returned, and create a URL attribute.
@@ -82,15 +84,20 @@ def category(request, category_name_url):
     # Create a context dictionary which we can pass to the template rendering engine.
     # We start by containing the name of the category passed by the user.
     context_dict = {'category_name': category_name, 'category_name_url': category_name_url}
+    cat_list = get_category_list()
+    context_dict['cat_list'] = cat_list
+
     try:
         # Can we find a category with the given name?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # So the .get() method returns one model instance or raises an exception.
-        category = Category.objects.get(name=category_name)
+        category = Category.objects.get(name__iexact=category_name)
+        context_dict['category'] = category
 
         # Retrieve all of the associated pages.
         # Note that filter returns >= 1 model instance.
-        pages = Page.objects.filter(category=category)
+        # pages = Page.objects.filter(category=category)
+        pages = Page.objects.filter(category=category).order_by('-views')
 
         # Adds our results list to the template context under name pages.
         context_dict['pages'] = pages
@@ -101,6 +108,12 @@ def category(request, category_name_url):
         # We get here if we didn't find the specified category.
         # Don't do anything - the template displays the "no category" message for us.
         pass
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            result_list = run_query(query)
+            context_dict['result_list'] = result_list
 
     # Go render the response and return it to the client.
     return render_to_response('rango/category.html', context_dict, context)
@@ -292,15 +305,64 @@ def user_logout(request):
     return HttpResponseRedirect('/rango/')
 
 
+@login_required
+def like_category(request):
+    context = RequestContext(request)
+    cat_id = None
+    if request.method == 'GET':
+        cat_id = request.GET['category_id']
+    likes = 0
+    if cat_id:
+        category = Category.objects.get(id=int(cat_id))
+        if category:
+            likes = category.likes + 1
+            category.likes = likes
+            category.save()
+    return HttpResponse(likes)
+
+
+@login_required
+def profile(request):
+    context = RequestContext(request)
+    cat_list = get_category_list()
+    context_dict = {'cat_list': cat_list}
+    u = User.objects.get(username=request.user)
+
+    try:
+        up = UserProfile.objects.get(user=u)
+    except:
+        up = None
+
+    context_dict['user'] = u
+    context_dict['userprofile'] = up
+    return render_to_response('rango/profile.html', context_dict, context)
+
+
 def search(request):
     context = RequestContext(request)
     result_list = []
-
     if request.method == 'POST':
         query = request.POST['query'].strip()
-
         if query:
             # Run our Bing function to get the results list!
             result_list = run_query(query)
 
     return render_to_response('rango/search.html', {'result_list': result_list}, context)
+
+
+def track_url(request):
+    context = RequestContext(request)
+    page_id = None
+    url = '/rango/'
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+            try:
+                page = Page.objects.get(id=page_id)
+                page.views = page.views + 1
+                page.save()
+                url = page.url
+            except:
+                pass
+
+    return redirect(url)
