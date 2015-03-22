@@ -35,6 +35,11 @@ def get_category_list(max_results=0, starts_with=''):
     return cat_list
 
 
+def job_exec(params):
+    op = "hello " + params
+    return op
+
+
 def index(request):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
@@ -96,8 +101,8 @@ def category(request, category_name_url):
 
         # Retrieve all of the associated pages.
         # Note that filter returns >= 1 model instance.
-        # pages = Page.objects.filter(category=category)
-        pages = Page.objects.filter(category=category).order_by('-views')
+        pages = Page.objects.filter(category=category)
+        # pages = Page.objects.filter(category=category).order_by('-views')
 
         # Adds our results list to the template context under name pages.
         context_dict['pages'] = pages
@@ -366,3 +371,17 @@ def track_url(request):
                 pass
 
     return redirect(url)
+
+
+def job_request(request):
+    context = RequestContext(request)
+    job = ["Axciom", "DineTimeLoad"]
+    context_dict = {'jobs': job}
+    if request.method == 'GET':
+        return render_to_response('rango/display_jobs.html', context_dict,context)
+    if request.method =='POST':
+        query = request.POST['query'].strip()
+        if query:
+            result_list = job_exec(query)
+            return render_to_response('rango/func_exec.html', {'result_list': result_list}, context)
+

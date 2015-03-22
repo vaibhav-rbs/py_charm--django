@@ -1,0 +1,15 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}Jobs{% endblock %}
+
+{% block body_block %}
+    <div class="container-fluid">
+        <p>Execute a job</p>
+        <form class="span8 form-search" id="display_job_form" method="post" action="/rango/display_jobs/">
+            {% csrf_token %}
+            <input type="text" class="input-long search-query"  name="query" value="" id="query" />
+            <button type="submit" class="btn btn-success" name="submit" value="execute">execute job</button>
+        </form>
+    </div>
+
+{% endblock %}
